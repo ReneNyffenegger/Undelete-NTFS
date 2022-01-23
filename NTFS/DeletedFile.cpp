@@ -1,5 +1,7 @@
 #include "DeletedFile.h"
 #include "NTFSDataStructures.h"
+#include <locale>
+#include <codecvt>
 
 #include <iostream>
 
@@ -135,7 +137,15 @@ std::ostream& operator<<(std::ostream& os, const ntfs::DeletedFile& df)
 {
 	if (df.m_pszFileName)
 	{
-		os << CString(df.m_pszFileName) << std::endl;
+
+// #include <string>
+
+std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+//const std::wstring wide_string = L"This is a string";
+// const std::string utf8_string = converter.to_bytes(wide_string);
+
+//		os << std::string(df.m_pszFileName) << std::endl;
+		os << converter.to_bytes(df.m_pszFileName) << std::endl;
 	}
 
 	if (df.m_pFileNameAttr)

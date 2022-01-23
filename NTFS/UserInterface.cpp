@@ -1,5 +1,8 @@
+// #include <filesystem>
+
 #include "UserInterface.h"
 #include "TempFile.h"
+#include <codecvt>
 
 #include <algorithm>
 
@@ -51,7 +54,9 @@ std::ostream& ntfs::UserInterface::printVolumeInfo(std::ostream& os, const MFTIn
 {
 	if (volumeInfo.m_pszVolumeLabel)
 	{
-		std::cout << "Volume label: " << CString(volumeInfo.m_pszVolumeLabel) << std::endl;
+std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+//		std::cout << "Volume label: " << CString(volumeInfo.m_pszVolumeLabel) << std::endl;
+  		std::cout << "Volume label: " << converter.to_bytes(volumeInfo.m_pszVolumeLabel) << std::endl;
 	}
 	std::cout << "NTFS version: " << (int)volumeInfo.m_VolInfoAttr.m_cMainVersion << std::endl;
 	std::cout << "Number of sectors: " << mftInfo.m_ulNumberOfSectors << std::endl;

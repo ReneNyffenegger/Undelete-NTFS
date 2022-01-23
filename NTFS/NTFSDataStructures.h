@@ -1,7 +1,7 @@
 #pragma once
 
 #include <windows.h>
-#include <atlstr.h>
+//#include <atlstr.h>
 
 namespace ntfs
 {
