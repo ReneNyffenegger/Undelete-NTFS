@@ -15,10 +15,15 @@ ntfs::MFTParser::MFTParser(const MFTInfo& mftInfo)
 	m_pVolumeInfo(std::make_shared<VolumeInfo>()),
 	m_pDeletedFiles(std::make_shared<std::list<DeletedFile>>())
 {
+
+std::cout << "#  ntfs::MFTParser::ctor: CreateFile" << std::endl;
 	m_hDrive = CreateFile(PHYSICAL_DRIVE, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
+std::cout << "#  ntfs::MFTParser::ctor: calling readFirstRecord" << std::endl;
 	readFirstRecord();
 	iterate(&MFTParser::findVolumeAttributes);
+
+std::cout << "#  ntfs::MFTParser::ctor: calling findBitmap" << std::endl;
 	iterate(&MFTParser::findBitmap);
 }
 
@@ -301,6 +306,8 @@ BOOLEAN ntfs::MFTParser::findBitmap(MFTEntryHeader* pHeader, UINT64 uAddress)
 {
 	const AttributeHeader* pAttrHeader = (AttributeHeader*)((CHAR*)pHeader + pHeader->m_wAttributeOffset);
 
+std::cout << "#  ntfs::MFTParser::findBitmap" << std::endl;
+
 	if (pAttrHeader->m_dwAttributeSize)
 	{
 		if (!(pAttrHeader = findAttr(pAttrHeader, FILE_NAME)))
@@ -313,6 +320,7 @@ BOOLEAN ntfs::MFTParser::findBitmap(MFTEntryHeader* pHeader, UINT64 uAddress)
 
 		if (!wcscmp(pszFileName, L"$Bitmap"))
 		{
+std::cout << "#  ntfs::MFTParser::findBitmap Bitmap was found" << std::endl;
 			m_uBitmapOffset = uAddress;
 
 			while (pAttrHeader->m_dwAttributeTypeID != DATA)
@@ -335,6 +343,7 @@ BOOLEAN ntfs::MFTParser::findBitmap(MFTEntryHeader* pHeader, UINT64 uAddress)
 		return FALSE;
 	}
 
+std::cout << "#  ntfs::MFTParser::findBitmap Bitmap was not found, returning FALSE" << std::endl;
 	return FALSE;
 }
 

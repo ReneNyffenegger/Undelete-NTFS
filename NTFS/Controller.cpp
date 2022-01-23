@@ -1,4 +1,5 @@
 #include "Controller.h"
+#include <iostream>
 
 ntfs::Controller::Controller()
 	: m_pMftParsers(std::make_unique<std::vector<MFTParser>>()),
@@ -7,6 +8,7 @@ ntfs::Controller::Controller()
 
 BOOLEAN ntfs::Controller::start()
 {
+std::cout << "#  ntfs::Controller::start" << std::endl;
 	try
 	{
 		PartitionTableParser parser;
@@ -14,12 +16,17 @@ BOOLEAN ntfs::Controller::start()
 
 		try
 		{
+std::cout << "#  ntfs::Controller::start calling getLogicalDrives" << std::endl;
 			ntfs::DrivesInfo di(parser.getLogicalDrives());
+std::cout << "#  ntfs::Controller::start calling getDrivesInfo" << std::endl;
 			di.getDrivesInfo();
+std::cout << "#  ntfs::Controller::start calling getDrivesMFT" << std::endl;
 			m_pDrivesInfo = di.getDrivesMFT();
+std::cout << "#  ntfs::Controller::start returned from getDrivesMFT" << std::endl;
 
 			for (auto& mftInfo : *m_pDrivesInfo)
 			{
+std::cout << "#  ntfs::Controller::start in for loop" << std::endl;
 				m_pMftParsers->emplace_back(std::move(MFTParser(mftInfo)));
 			}
 		}
