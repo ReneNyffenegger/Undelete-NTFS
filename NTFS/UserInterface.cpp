@@ -101,6 +101,7 @@ int ntfs::UserInterface::findDeletedFiles()
 
 void ntfs::UserInterface::printDeletdFilesInfo(const std::shared_ptr<std::list<DeletedFile>> pDeletedFiles)
 {
+std::cout << "## Creating temp file m_TempFileName = " << m_TempFileName << std::endl;
 	TempFile* pTempFile = new TempFile(m_TempFileName, m_TempFileRelativePath, std::fstream::in | std::fstream::out | std::fstream::trunc);
 
 	unsigned int i = 1;
@@ -108,6 +109,10 @@ void ntfs::UserInterface::printDeletdFilesInfo(const std::shared_ptr<std::list<D
 	{
 		pTempFile->output(i++, ")", df);
 	}
+
+std::cout << "## finished writing to m_TempFileName = " << m_TempFileName << ", now trying to open it. But first press enter." << std::endl;
+std::string str;
+std::getline(cin, str);
 
 	int result = (int)ShellExecuteW(GetDesktopWindow(), L"open", pTempFile->getFilePath().c_str(), NULL, NULL, SW_SHOW);
 	if (result < 32)
