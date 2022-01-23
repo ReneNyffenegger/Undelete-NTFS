@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "DrivesInfo.h"
 #include "PartitionTableParser.h"
 
@@ -33,6 +35,7 @@ void ntfs::DrivesInfo::getDrivesInfo()
 		ReadFile(hDrive, caSector, SECTOR_SIZE, &dwBytesRead, NULL); // read boot sector
 
 		strncpy_s(caOemId, caSector + 3, OEM_ID_LENGTH); // OEM_ID is the special field, which indicates NTFS file system in the partition
+		//strncpy_s(caOemId, OEM_ID_LENGTH, caSector + 3, OEM_ID_LENGTH); // OEM_ID is the special field, which indicates NTFS file system in the partition
 		if (strcmp(caOemId, OEM_ID) != 0)
 		{		
 			auto temp = entry++;
