@@ -124,6 +124,7 @@ BOOLEAN ntfs::MFTParser::findVolumeAttributes(MFTEntryHeader* pHeader, UINT64 uA
 
 void ntfs::MFTParser::findDeletedFiles()
 {
+std::cout << "## MFTParser::findDeletedFiles" << std::endl;
 	iterate(&MFTParser::checkForDeleted);
 }
 

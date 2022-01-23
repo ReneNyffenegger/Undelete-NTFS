@@ -84,9 +84,11 @@ int ntfs::UserInterface::findDeletedFiles()
 		std::cout << "\nSearching for deleted files... Wait...\n";
 
 		m_Controller.findDeletedFiles((std::size_t)volumeNumber);
+std::cout << "## finished with searching?" << std::endl;
 
 		try
 		{
+std::cout << "## calling printDeletdFilesInfo" << std::endl;
 			printDeletdFilesInfo(m_Controller.getDeletedFiles((std::size_t)volumeNumber));
 		}
 		catch (std::runtime_error error)
@@ -112,7 +114,7 @@ std::cout << "## Creating temp file m_TempFileName = " << m_TempFileName << std:
 
 std::cout << "## finished writing to m_TempFileName = " << m_TempFileName << ", now trying to open it. But first press enter." << std::endl;
 std::string str;
-std::getline(cin, str);
+std::getline(std::cin, str);
 
 	int result = (int)ShellExecuteW(GetDesktopWindow(), L"open", pTempFile->getFilePath().c_str(), NULL, NULL, SW_SHOW);
 	if (result < 32)

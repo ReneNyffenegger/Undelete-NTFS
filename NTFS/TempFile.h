@@ -4,6 +4,8 @@
 #include <string>
 #include <filesystem>
 
+#include <iostream>
+
 namespace ntfs
 {
 
@@ -16,6 +18,8 @@ namespace ntfs
 			relativeFilePath(relativePath),
 			mode(openMode)
 		{
+
+std::cout << "## Tempfile: tempPath = " << tempPath << ", fileName = " << fileName << ", relativePath = " << relativePath << std::endl;
 			std::filesystem::create_directories(tempPath / relativePath);
 			file.open(std::filesystem::path(tempPath / relativePath / fileName), mode);
 			if (!file)
@@ -27,6 +31,7 @@ namespace ntfs
 		~TempFile()
 		{
 			file.close();
+std::cout << "## ~ Tempfile: remove all, tempPath = " << tempPath << ", relativeFilePath" << std::endl;
 			std::filesystem::remove_all(tempPath / relativeFilePath);
 		}
 

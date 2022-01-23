@@ -57,6 +57,7 @@ const std::shared_ptr<std::vector<ntfs::MFTInfo>> ntfs::Controller::getDrivesInf
 
 void ntfs::Controller::findDeletedFiles(std::size_t volumeNumb)
 {
+std::cout << "## Controller::findDeletedFiles" << std::endl;
 	m_pMftParsers->at(volumeNumb).findDeletedFiles();
 }
 
