@@ -1,0 +1,5 @@
+When you delete files or folders, the data isn't initially removed from the
+hard disk. Instead, the space on the disk that was occupied by the deleted data
+is deallocated. After it's deallocated, the space is available to use when new
+data is written to the disk. Until the space is overwritten, you can recover
+the deleted data by using a low-level disk editor or data-recovery software.
